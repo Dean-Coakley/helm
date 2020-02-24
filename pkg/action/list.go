@@ -151,6 +151,10 @@ func (l *List) Run() ([]*release.Release, error) {
 		}
 	}
 
+	// BUG:
+	// filterList() scrubs releases for duplicate versions of a release. Only returning the latest one.
+	// However, if the user filters by "FAILED" the successful deployment not included in the list passed to filterList()
+	// This results in a "FAILED" deployment being reported despite a "SUCCESSFUL" newer version of release is present.
 	results, err := l.cfg.Releases.List(func(rel *release.Release) bool {
 		// Skip anything that the mask doesn't cover
 		currentStatus := l.StateMask.FromName(rel.Info.Status.String())
