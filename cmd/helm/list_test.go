@@ -32,6 +32,7 @@ func TestListCmd(t *testing.T) {
 	timestamp2 := time.Unix(sampleTimeSeconds+2, 0).UTC()
 	timestamp3 := time.Unix(sampleTimeSeconds+3, 0).UTC()
 	timestamp4 := time.Unix(sampleTimeSeconds+4, 0).UTC()
+	timestamp5 := time.Unix(sampleTimeSeconds+5, 0).UTC()
 	chartInfo := &chart.Chart{
 		Metadata: &chart.Metadata{
 			Name:       "chickadee",
@@ -92,6 +93,16 @@ func TestListCmd(t *testing.T) {
 			Chart: chartInfo,
 		},
 		{
+			Name:      "loki",
+			Version:   1,
+			Namespace: defaultNamespace,
+			Info: &release.Info{
+				LastDeployed: timestamp5,
+				Status:       release.StatusFailed,
+			},
+			Chart: chartInfo,
+		},
+		{
 			Name:      "drax",
 			Version:   1,
 			Namespace: defaultNamespace,
@@ -137,6 +148,16 @@ func TestListCmd(t *testing.T) {
 			Namespace: "milano",
 			Info: &release.Info{
 				LastDeployed: timestamp1,
+				Status:       release.StatusDeployed,
+			},
+			Chart: chartInfo,
+		},
+		{
+			Name:      "loki",
+			Version:   2,
+			Namespace: defaultNamespace,
+			Info: &release.Info{
+				LastDeployed: timestamp5,
 				Status:       release.StatusDeployed,
 			},
 			Chart: chartInfo,
